@@ -1,13 +1,16 @@
 package com.tanykoo.cc;
 
+import com.tanykoo.utils.Utils;
 import javafx.application.Application;
 import javafx.event.EventHandler;  
 import javafx.scene.Group;  
 import javafx.scene.Scene;  
 import javafx.scene.canvas.Canvas;  
 import javafx.scene.canvas.GraphicsContext;  
-import javafx.scene.input.MouseEvent;  
-import javafx.scene.paint.Color;  
+import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;  
 import javafx.scene.paint.LinearGradient;  
 import javafx.scene.paint.Stop;  
@@ -58,7 +61,9 @@ public class CanvasDoodleTest extends Application {
         // Fill the Canvas with a Blue rectnagle when the user double-clicks  
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {  
             @Override  
-            public void handle(MouseEvent t) {              
+            public void handle(MouseEvent t) {
+                MediaPlayer mediaPlayer = new MediaPlayer(new Media(Utils.getClassResourceStr("/music/MOVE.WAV")));
+                mediaPlayer.play();
                 if (t.getClickCount() >1) {  
                     reset(canvas, Color.BLUE);  
                 }    

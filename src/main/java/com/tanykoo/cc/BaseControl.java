@@ -21,7 +21,6 @@ public abstract class BaseControl extends Canvas {
 
     public void setImage(Image image) {
         this.image = image;
-        repaint();
     }
 
     public abstract void paint();
@@ -30,7 +29,11 @@ public abstract class BaseControl extends Canvas {
 
     public abstract void setLocation(double x, double y);
 
-    public abstract void clicked(MouseEvent event);
+    public void setLocation(Point point){
+        setLocation(point.getX(),point.getY());
+    }
+
+    protected abstract void clicked(MouseEvent event);
 
     public abstract void setChessStyle(ChessStyle style);
 

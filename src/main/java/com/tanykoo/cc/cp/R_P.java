@@ -10,17 +10,20 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 
-public class R_C extends ChessPiece {
+public class R_P extends ChessPiece {
 
-    private static Logger logger = LoggerFactory.getLogger(R_C.class);
+    private static Logger logger = LoggerFactory.getLogger(R_P.class);
 
 
-    public R_C(ChessStyle chessStyle) {
+    public R_P(ChessStyle chessStyle) {
         super(chessStyle);
-        this.name = "车";
+        this.name = "炮";
         this.camp = Camp.RED;
     }
 
+    protected String getImage(ChessStyle chessStyle){
+        return chessStyle.getR_p();
+    }
 
     @Override
     public void clicked(MouseEvent event) {
@@ -29,10 +32,6 @@ public class R_C extends ChessPiece {
         requeParentClicked();
     }
 
-    @Override
-    protected String getImage(ChessStyle chessStyle) {
-        return chessStyle.getR_c();
-    }
 
     @Override
     public List<Point> getEnablePoints(int[][] table) {
@@ -41,7 +40,7 @@ public class R_C extends ChessPiece {
 
     @Override
     public List<Point> getEatablePoints(int[][] table) {
-        return Rule.getEatAblePointC(table,point);
+        return Rule.getEatAblePointP(table,point);
     }
 
     @Override

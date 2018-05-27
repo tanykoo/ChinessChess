@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,9 @@ public class ChinessChess extends Application {
     private static Logger logger = LoggerFactory.getLogger(ChinessChess.class);
 
     @FXML ChessBoard chessBoard;
+    @FXML VBox panel;
+    @FXML Button startGame;
+
     ChessStyle style1 ;
     ChessStyle style2 ;
     public static void main(String[] args) {
@@ -40,7 +45,16 @@ public class ChinessChess extends Application {
         }
         if(chessBoard.getChessStyle().equals(style2)){
             chessBoard.setChessStyle(style1);
-        }else
+            panel.setStyle("-fx-background-image: url(' "+ style1.getBg() + "')");
+        }else {
             chessBoard.setChessStyle(style2);
+            panel.setStyle("-fx-background-image: url(' "+ style2.getBg() + "')");
+        }
+    }
+
+    public void startGame(){
+        chessBoard.initGame(ChessManual.INIT_MANUAL);
+        startGame.setDisable(true);
+
     }
 }

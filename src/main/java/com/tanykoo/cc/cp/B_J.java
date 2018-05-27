@@ -10,38 +10,37 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 
-public class R_C extends ChessPiece {
+public class B_J extends ChessPiece {
 
-    private static Logger logger = LoggerFactory.getLogger(R_C.class);
+    private static Logger logger = LoggerFactory.getLogger(B_J.class);
 
 
-    public R_C(ChessStyle chessStyle) {
+    public B_J(ChessStyle chessStyle) {
         super(chessStyle);
-        this.name = "车";
-        this.camp = Camp.RED;
+        this.name = "將";
+        this.camp = Camp.BLACK;
     }
 
+    protected String getImage(ChessStyle chessStyle){
+        return chessStyle.getB_j();
+    }
 
     @Override
     public void clicked(MouseEvent event) {
-        logger.debug(getName() + " is clicked");
+        logger.debug( getName() + " is clicked");
 
         requeParentClicked();
     }
 
-    @Override
-    protected String getImage(ChessStyle chessStyle) {
-        return chessStyle.getR_c();
-    }
 
     @Override
     public List<Point> getEnablePoints(int[][] table) {
-        return Rule.getEnablePointC_P(table,point);
+        return Rule.getEnablePointJ(table,point);
     }
 
     @Override
     public List<Point> getEatablePoints(int[][] table) {
-        return Rule.getEatAblePointC(table,point);
+        return Rule.getEatAblePointJ(table,point);
     }
 
     @Override
@@ -51,22 +50,27 @@ public class R_C extends ChessPiece {
         }
         String desc = getName();
 
-        desc = desc + " " + R_LOCATION.charAt(8-(int) lastPoint.getY());
+        desc = desc + " " + B_LOCATION.charAt((int) lastPoint.getY());
 
         if(point.getX() == lastPoint.getX()){
             desc = desc + " " + TRANSLATE ;
-            desc = desc + " " + R_LOCATION.charAt(8- (int)point.getY());
+            desc = desc + " " + B_LOCATION.charAt((int)point.getY());
         }else{
             if(point.getX() > lastPoint.getX()){
-                desc = desc + " " + BACKOFF;
-                desc = desc + " " + R_LOCATION.charAt((int) (point.getX() - lastPoint.getX()) -1);
-            }else{
                 desc = desc + " " + FORWARD;
-                desc = desc + " " + R_LOCATION.charAt((int) (lastPoint.getX() - point.getX()) -1);
+                desc = desc + " " + B_LOCATION.charAt((int) (point.getX() - lastPoint.getX()) -1);
+            }else{
+                desc = desc + " " + BACKOFF;
+                desc = desc + " " + B_LOCATION.charAt((int) (lastPoint.getX() - point.getX()) -1);
             }
 
         }
 
         return desc;
+    }
+
+    @Override
+    public void eated() {
+        super.eated();
     }
 }

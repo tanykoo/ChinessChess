@@ -18,6 +18,7 @@ public class ChessStyle implements Serializable {
     public static final ChessStyle STYLE_DEFAULT = new ChessStyle(Utils.getClassResource("/images"));
 
     private static final String STYLE_PROPERTIES = "style.properties";
+    private static final String STYLE_BG = "bg.jpg";
     private static final String STYLE_BOARD = "bg.png";
     private static final String STYLE_DOT = "dot.png";
     private static final String STYLE_BBOX = "b_box.png";
@@ -44,6 +45,9 @@ public class ChessStyle implements Serializable {
             throw new StyleException("this is not a style source [" + styleSource.toString() + "]");
         }
         setBoard(styleSource.toString() + Utils.SEPARATOR + STYLE_BOARD);
+        setBg(styleSource.toString() + Utils.SEPARATOR + STYLE_BG);
+        setDot(styleSource.toString() + Utils.SEPARATOR + STYLE_DOT);
+
         setB_box(styleSource.toString() + Utils.SEPARATOR + STYLE_BBOX);
         setB_c(styleSource.toString() + Utils.SEPARATOR + STYLE_BC);
         setB_m(styleSource.toString() + Utils.SEPARATOR + STYLE_BM);
@@ -77,6 +81,10 @@ public class ChessStyle implements Serializable {
 
         setWidth(Double.parseDouble((String) properties.get("width")));
         setHeight(Double.parseDouble((String) properties.get("height")));
+    }
+
+    public ChessStyle getDefaultStyle(){
+        return new ChessStyle(Utils.getClassResource("/images"));
     }
 
     private boolean assertIsStyleRource(URL styleSource){
@@ -122,6 +130,8 @@ public class ChessStyle implements Serializable {
             flag = f_dot.isFile() && flag;
             File f_board = new File(file.getPath() + Utils.SEPARATOR + STYLE_BOARD);
             flag = f_board.isFile() && flag;
+            File f_bg = new File(file.getPath() + Utils.SEPARATOR + STYLE_BG);
+            flag = f_bg.isFile() && flag;
 
             File f_prop = new File(file.getPath() + Utils.SEPARATOR + STYLE_PROPERTIES);
             flag = f_prop.exists() && f_prop.isFile() && flag;
@@ -132,6 +142,8 @@ public class ChessStyle implements Serializable {
     }
 
 
+
+    private String bg;
 
     private String board;
 
@@ -174,6 +186,14 @@ public class ChessStyle implements Serializable {
     private double width;
 
     private double height;
+
+    public String getBg() {
+        return bg;
+    }
+
+    public void setBg(String bg) {
+        this.bg = bg;
+    }
 
     public String getBoard() {
         return board;
