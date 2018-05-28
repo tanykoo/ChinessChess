@@ -6,7 +6,7 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml" fx:id="panel"
-      fx:controller="com.tanykoo.cc.ChinessChess" stylesheets="/css/bg.css" alignment="CENTER">
+      fx:controller="com.tanykoo.cc.ChineseChess" stylesheets="/css/bg.css" alignment="CENTER">
         <ChessBoard  fx:id="chessBoard" />
         <Button text="chengeStyle" onAction="#chengeStyele"/>
         <Button text="start Game" fx:id="startGame" onAction="#startGame"/>

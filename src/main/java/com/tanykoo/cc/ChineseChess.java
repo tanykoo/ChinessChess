@@ -13,8 +13,8 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ChinessChess extends Application {
-    private static Logger logger = LoggerFactory.getLogger(ChinessChess.class);
+public class ChineseChess extends Application {
+    private static Logger logger = LoggerFactory.getLogger(ChineseChess.class);
 
     @FXML ChessBoard chessBoard;
     @FXML VBox panel;
@@ -30,7 +30,7 @@ public class ChinessChess extends Application {
     @Override
     public void start(Stage primaryStage) throws  Exception{
 
-        Parent parent = FXMLLoader.load(ChinessChess.class.getResource("/layout/chinesschess.fxml"));
+        Parent parent = FXMLLoader.load(ChineseChess.class.getResource("/layout/chinesschess.fxml"));
 
         primaryStage.setScene(new Scene(parent));
         primaryStage.show();
