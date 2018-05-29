@@ -38,9 +38,28 @@ public abstract class ChessPiece extends BaseControl {
      */
     protected Point lastPoint;
 
+    /**
+     * 棋子阵营
+     */
     protected Camp camp;
 
     protected String name;
+
+    /**
+     *棋盘阵营,调整棋子位置
+     */
+    protected Camp boardCamp;
+
+    public Camp getBoardCamp() {
+        return boardCamp;
+    }
+
+    protected void setBoardCamp(Camp boardCamp) {
+        this.boardCamp = boardCamp;
+        if(!camp.equals(boardCamp)){
+            setRotate(180F);
+        }
+    }
 
     public Camp getCamp(){
         return camp;
@@ -50,7 +69,6 @@ public abstract class ChessPiece extends BaseControl {
     public ChessPiece(ChessStyle chessStyle){
         setImage(new Image(getImage(chessStyle)));
         paint();
-
     }
 
     @Override
@@ -58,6 +76,7 @@ public abstract class ChessPiece extends BaseControl {
         GraphicsContext graphicsContext = getGraphicsContext2D();
         setWidth(getImage().getWidth());
         setHeight(getImage().getHeight());
+        graphicsContext.drawImage(getImage(),0,0);
         graphicsContext.drawImage(getImage(),0,0);
     }
 
@@ -75,7 +94,8 @@ public abstract class ChessPiece extends BaseControl {
     public void setLocation(double x, double y) {
         point = new Point(x,y);
         ChessBoard chessBoard = (ChessBoard) getParent();
-        Point point = chessBoard.getAbsloutePoint(this.point);
+        Point point1 = ChessBoard.getGridsPoint(boardCamp,point);
+        Point point = chessBoard.getAbsloutePoint(point1);
         logger.debug(getName() + " Location x=" + point.getX() + "  y=" + point.getY());
         setTranslateX(point.getX() - getWidth()/2);
         setTranslateY(point.getY() - getHeight()/2);
@@ -172,5 +192,4 @@ public abstract class ChessPiece extends BaseControl {
         ChessBoard chessBoard = (ChessBoard) getParent();
         chessBoard.eated(this);
     }
-
 }

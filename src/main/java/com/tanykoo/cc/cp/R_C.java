@@ -20,6 +20,10 @@ public class R_C extends ChessPiece {
         this.name = "车";
         this.camp = Camp.RED;
     }
+    public R_C(ChessStyle chessStyle,Camp boardCamp) {
+        this(chessStyle);
+        setBoardCamp(boardCamp);
+    }
 
 
     @Override

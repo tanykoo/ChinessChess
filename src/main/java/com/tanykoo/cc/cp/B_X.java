@@ -20,6 +20,10 @@ public class B_X extends ChessPiece {
         this.name = "象";
         this.camp = Camp.BLACK;
     }
+    public B_X(ChessStyle chessStyle,Camp boardCamp) {
+        this(chessStyle);
+        setBoardCamp(boardCamp);
+    }
 
     protected String getImage(ChessStyle chessStyle){
         return chessStyle.getB_x();

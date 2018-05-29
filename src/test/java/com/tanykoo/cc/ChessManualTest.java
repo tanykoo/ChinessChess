@@ -17,7 +17,7 @@ public class ChessManualTest {
     @Test
     public void test(){
         String manualStrPatten = "^[r,b]{1}[0-7,A-G]{90}[0,K,.]{0,90}$";
-        String INITALITASTR = "b"
+        String INITALITASTR = "br"
                 + "ABCDEDCBA"
                 + "000000000"
                 + "0F00000F0"
@@ -34,11 +34,11 @@ public class ChessManualTest {
 
 //        ChessManual chessManual = ChessManual.createManual(INITALITASTR);
 //
-//        System.out.println(chessManual.toString());
+//        System.out.println(chessManual.toString())
 
-        ChessManual chessManual1 = ChessManual.INIT_MANUAL;
+        ChessManual chessManual1 = ChessManual.INIT_MANUAL_SECEND;
 
-        Assert.assertEquals("toString() 有错", chessManual1.toString(), "rABCDEDCBA0000000000F00000F0G0G0G0G0G000000000000000000707070707060000060000000000123454321");
+        Assert.assertEquals("toString() 有错", chessManual1.toString(), "rbABCDEDCBA0000000000F00000F0G0G0G0G0G000000000000000000707070707060000060000000000123454321");
 
         int[][] ints = chessManual1.getTable();
         for(int i =0 ; i <ints.length ; i++){

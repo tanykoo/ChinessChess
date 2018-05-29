@@ -1,6 +1,7 @@
 package com.tanykoo.cc.cp;
 
 import com.tanykoo.cc.Camp;
+import com.tanykoo.cc.ChessBoard;
 import com.tanykoo.cc.ChessStyle;
 import com.tanykoo.cc.Point;
 import javafx.scene.input.MouseEvent;
@@ -19,6 +20,10 @@ public class B_J extends ChessPiece {
         super(chessStyle);
         this.name = "將";
         this.camp = Camp.BLACK;
+    }
+    public B_J(ChessStyle chessStyle,Camp boardCamp) {
+        this(chessStyle);
+        setBoardCamp(boardCamp);
     }
 
     protected String getImage(ChessStyle chessStyle){
@@ -71,6 +76,8 @@ public class B_J extends ChessPiece {
 
     @Override
     public void eated() {
-        super.eated();
+        ChessBoard chessBoard = (ChessBoard) getParent();
+        chessBoard.gameOver();
+        chessBoard.eated(this);
     }
 }

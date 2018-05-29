@@ -1,12 +1,15 @@
 package com.tanykoo.cc;
 
 import com.tanykoo.cc.cp.*;
+import com.tanykoo.cc.listener.ModelEvent;
+import com.tanykoo.cc.listener.ModelListener;
 import com.tanykoo.cc.music.Media;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;
@@ -27,7 +30,7 @@ public class ChessBoard extends Group {
 
     private ChessStyle chessStyle;
 
-    private boolean enable = true;
+    private boolean enable = false;
 
     public void setEnable(boolean enable) {
         this.enable = enable;
@@ -35,6 +38,14 @@ public class ChessBoard extends Group {
 
     public boolean isEnable() {
         return enable;
+    }
+
+    private ModelListener modelListener;
+
+    private boolean gameOver = false;
+
+    public void setModelListener(ModelListener modelListener){
+        this.modelListener = modelListener;
     }
 
     /**
@@ -91,6 +102,9 @@ public class ChessBoard extends Group {
         this.getChildren().addAll(grids.chessPieces);
         for (ChessPiece chessPiece: grids.chessPieces) {
             chessPiece.setLocation(chessPiece.getPoint());
+        }
+        if(chessManual.getBoardCamp().equals(Camp.RED)) {
+            this.setEnable(true);
         }
     }
 
@@ -178,10 +192,14 @@ public class ChessBoard extends Group {
 
         private ChessManual chessManual;
 
+        private Point clickedPoint;
+
         /**
          * 被选中的棋子
          */
         private ChessPiece selectedPiece;
+
+        private boolean moniClick;
 
 
 
@@ -195,73 +213,73 @@ public class ChessBoard extends Group {
                 logger.debug(chessManual.getPieceMap().get(point) + "");
                 switch (chessManual.getPieceMap().get(point)){
                     case ChessManual.B_C:
-                        ChessPiece b_c = new B_C(chessStyle);
+                        ChessPiece b_c = new B_C(chessStyle,chessManual.getBoardCamp());
                         b_c.setPoint(point);
                         chessPieces.add(b_c);
                         break;
                     case ChessManual.B_J:
-                        ChessPiece b_j = new B_J(chessStyle);
+                        ChessPiece b_j = new B_J(chessStyle,chessManual.getBoardCamp());
                         b_j.setPoint(point);
                         chessPieces.add(b_j);
                         break;
                     case ChessManual.B_M:
-                        ChessPiece b_m = new B_M(chessStyle);
+                        ChessPiece b_m = new B_M(chessStyle,chessManual.getBoardCamp());
                         b_m.setPoint(point);
                         chessPieces.add(b_m);
                         break;
                     case ChessManual.B_X:
-                        ChessPiece b_x = new B_X(chessStyle);
+                        ChessPiece b_x = new B_X(chessStyle,chessManual.getBoardCamp());
                         b_x.setPoint(point);
                         chessPieces.add(b_x);
                         break;
                     case ChessManual.B_S:
-                        ChessPiece b_s = new B_S(chessStyle);
+                        ChessPiece b_s = new B_S(chessStyle,chessManual.getBoardCamp());
                         b_s.setPoint(point);
                         chessPieces.add(b_s);
                         break;
                     case ChessManual.B_P:
-                        ChessPiece b_p = new B_P(chessStyle);
+                        ChessPiece b_p = new B_P(chessStyle,chessManual.getBoardCamp());
                         b_p.setPoint(point);
                         chessPieces.add(b_p);
                         break;
                     case ChessManual.B_Z:
-                        ChessPiece b_z = new B_Z(chessStyle);
+                        ChessPiece b_z = new B_Z(chessStyle,chessManual.getBoardCamp());
                         b_z.setPoint(point);
                         chessPieces.add(b_z);
                         break;
 
                     case ChessManual.R_C:
-                        ChessPiece r_c = new R_C(chessStyle);
+                        ChessPiece r_c = new R_C(chessStyle,chessManual.getBoardCamp());
                         r_c.setPoint(point);
                         chessPieces.add(r_c);
                         break;
                     case ChessManual.R_J:
-                        ChessPiece r_j = new R_J(chessStyle);
+                        ChessPiece r_j = new R_J(chessStyle,chessManual.getBoardCamp());
                         r_j.setPoint(point);
                         chessPieces.add(r_j);
                         break;
                     case ChessManual.R_M:
-                        ChessPiece r_m = new R_M(chessStyle);
+                        ChessPiece r_m = new R_M(chessStyle,chessManual.getBoardCamp());
                         r_m.setPoint(point);
                         chessPieces.add(r_m);
                         break;
                     case ChessManual.R_X:
-                        ChessPiece r_x = new R_X(chessStyle);
+                        ChessPiece r_x = new R_X(chessStyle,chessManual.getBoardCamp());
                         r_x.setPoint(point);
                         chessPieces.add(r_x);
                         break;
                     case ChessManual.R_S:
-                        ChessPiece r_s = new R_S(chessStyle);
+                        ChessPiece r_s = new R_S(chessStyle,chessManual.getBoardCamp());
                         r_s.setPoint(point);
                         chessPieces.add(r_s);
                         break;
                     case ChessManual.R_P:
-                        ChessPiece r_p = new R_P(chessStyle);
+                        ChessPiece r_p = new R_P(chessStyle,chessManual.getBoardCamp());
                         r_p.setPoint(point);
                         chessPieces.add(r_p);
                         break;
                     case ChessManual.R_Z:
-                        ChessPiece r_z = new R_Z(chessStyle);
+                        ChessPiece r_z = new R_Z(chessStyle,chessManual.getBoardCamp());
                         r_z.setPoint(point);
                         chessPieces.add(r_z);
                         break;
@@ -316,15 +334,18 @@ public class ChessBoard extends Group {
             setWidth(width*9);
             setHeight(height*10);
             for(Point point : rBoxPoints){
-                Point abPoint = Grids.this.getGridPoint(point);
+                Point point1 = getGridsPoint(chessManual.getBoardCamp(),point);
+                Point abPoint = Grids.this.getGridPoint(point1);
                 gc.drawImage(rBox,abPoint.getX() - rBox.getWidth()/2, abPoint.getY() - rBox.getHeight()/2);
             }
             for(Point point : bBoxPoints){
-                Point abPoint = Grids.this.getGridPoint(point);
+                Point point1 = getGridsPoint(chessManual.getBoardCamp(),point);
+                Point abPoint = Grids.this.getGridPoint(point1);
                 gc.drawImage(bBox,abPoint.getX() - bBox.getWidth()/2, abPoint.getY() - bBox.getHeight()/2);
             }
             for (Point point: dotPoints) {
-                Point abPoint = Grids.this.getGridPoint(point);
+                Point point1 = getGridsPoint(chessManual.getBoardCamp(),point);
+                Point abPoint = Grids.this.getGridPoint(point1);
                 gc.drawImage(dot,abPoint.getX() - dot.getWidth()/2 , abPoint.getY() - dot.getHeight()/2-1);
             }
         }
@@ -352,10 +373,6 @@ public class ChessBoard extends Group {
             Grids.this.setTranslateY(y);
         }
 
-        public Point getPoint00(){
-            return point00;
-        }
-
         /**
          * 棋盘被点击
          * 事件有两个
@@ -365,12 +382,12 @@ public class ChessBoard extends Group {
          */
         @Override
         public void clicked(MouseEvent event) {
-
-            if(!enable){
+            if((!enable) || gameOver){
                 return;
             }
             Point clickedPoint = new Point(event.getX(),event.getY());
             if(!clickEneft(clickedPoint)){
+                logger.debug("cliked is not eneft");
                 Media.click();
                 return;
             }
@@ -379,6 +396,7 @@ public class ChessBoard extends Group {
 
             logger.debug("clicked point x=" + event.getX()
                     + "  y=" + event.getY());
+            clickedPoint = getGridsPoint(chessManual.getBoardCamp(),clickedPoint);
             Grids.this.clicked(clickedPoint);
         }
 
@@ -388,11 +406,13 @@ public class ChessBoard extends Group {
             gridsPoint.setX((int)(clickedPoint.getY()/width));
             gridsPoint.setY((int)(clickedPoint.getX()/height));
 
+            logger.debug(gridsPoint.getX() + " " + gridsPoint.getY());
             Point centerPoint = getGridPoint(gridsPoint);
+            logger.debug(centerPoint.getX() + " " + centerPoint.getY());
+            logger.debug(clickedPoint.getX() + " " + clickedPoint.getY());
 
             return clickedPoint.getY() > centerPoint.getY() - height/4  && clickedPoint.getY() < centerPoint.getY() + height/4
                     && clickedPoint.getX() > centerPoint.getX() - width/4 && centerPoint.getX() < centerPoint.getX() + width/4;
-
         }
 
         private Point getAbsloutePoint(Point point){
@@ -412,8 +432,25 @@ public class ChessBoard extends Group {
          * @param piece
          */
         private void clickedPiece(ChessPiece piece){
-            if(!enable){
+            clickedPiece(piece,false);
+        }
+        /**
+         * 棋子被点击
+         * 事件
+         * 1：选子
+         * 2：被吃
+         * 3:点击失误
+         * @param piece 被点击棋子
+         * @param flag 是否是模拟点击 true:是模拟点击  false:实际点击
+         */
+        private void clickedPiece(ChessPiece piece,boolean flag){
+            if((!enable && !flag)|| gameOver){
                 return;
+            }
+            this.clickedPoint = piece.getPoint();
+            this.moniClick = flag;
+            if(modelListener != null){
+                modelListener.clicked(new ModelEvent(ChessBoard.this));
             }
             //选中棋子
             if(chessManual.getCamp().equals(piece.getCamp())){
@@ -442,10 +479,6 @@ public class ChessBoard extends Group {
                 }else
                     Media.illegal();
             }
-
-
-
-
         }
 
         /**
@@ -453,8 +486,8 @@ public class ChessBoard extends Group {
          * @param chessPiece
          */
         private void placePiece(ChessPiece chessPiece){
-            if(!enable){
-                return;
+            if(modelListener != null){
+                modelListener.placedPiece(new ModelEvent(ChessBoard.this));
             }
             if(chessPiece.equals(selectedPiece)){
                 chessPiece.setLocation(chessPiece.getPoint());
@@ -476,6 +509,7 @@ public class ChessBoard extends Group {
                 }else{
                     rBoxPoints.add(selectedPiece.getPoint());
                 }
+                //落子后清空被选择棋子
                 selectedPiece = null;
 
             }
@@ -493,9 +527,27 @@ public class ChessBoard extends Group {
 
 
         private void clicked(Point point){
+            clicked(point,false);
+        }
+
+        /**
+         *
+         *
+         * @param point
+         * @param flag true:模拟点击  false:实际点击
+         */
+        private void clicked(Point point,boolean flag){
+            if(gameOver){
+                return;
+            }
+            this.clickedPoint = point;
+            this.moniClick = flag;
+            if(modelListener != null){
+                modelListener.clicked(new ModelEvent(ChessBoard.this));
+            }
             for(ChessPiece chessPiece : chessPieces){
                 if(chessPiece.getPoint().equals(point)){
-                    clickedPiece(chessPiece);
+                    clickedPiece(chessPiece,flag);
                     return;
                 }
             }
@@ -537,7 +589,38 @@ public class ChessBoard extends Group {
      * @param point
      */
     public void clicked(Point point){
-        grids.clicked(point);
+        grids.clicked(point,true);
     }
 
+    public static Point getGridsPoint(Camp boardCamp,Point point){
+        Point point1 = new Point();
+        switch (boardCamp){
+            case BLACK:
+                point1.setX(9 - point.getX());
+                point1.setY(8 - point.getY());
+                break;
+            case RED:
+                point1.setX(point.getX());
+                point1.setY(point.getY());
+                break;
+        }
+        return point1;
+    }
+
+    public Point getClickedPoint(){
+        return grids.clickedPoint;
+    }
+    public boolean isMoniClick(){
+        return grids.moniClick;
+    }
+
+    public void gameOver(){
+        gameOver(grids.chessManual.getCamp());
+    }
+    public void gameOver(Camp winner){
+        gameOver = true;
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText(winner.getName() + "is winner");
+        alert.show();
+    }
 }

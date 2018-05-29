@@ -10,4 +10,13 @@
         <ChessBoard  fx:id="chessBoard" />
         <Button text="chengeStyle" onAction="#chengeStyele"/>
         <Button text="start Game" fx:id="startGame" onAction="#startGame"/>
+        <HBox>
+                <Label text="x:"/>
+                <TextField fx:id="t_x"/>
+        </HBox>
+        <HBox>
+                <Label text="y:"/>
+                <TextField fx:id="t_y"/>
+        </HBox>
+        <Button text="click" fx:id="click" onAction="#click"/>
 </VBox>

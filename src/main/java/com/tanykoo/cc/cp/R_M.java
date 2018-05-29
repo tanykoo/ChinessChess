@@ -20,6 +20,10 @@ public class R_M extends ChessPiece {
         this.name = "马";
         this.camp = Camp.RED;
     }
+    public R_M(ChessStyle chessStyle,Camp boardCamp) {
+        this(chessStyle);
+        setBoardCamp(boardCamp);
+    }
 
     protected String getImage(ChessStyle chessStyle){
         return chessStyle.getR_m();

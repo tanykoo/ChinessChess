@@ -1,5 +1,6 @@
 package com.tanykoo.cc;
 
+import com.tanykoo.cc.listener.ServerModelListener;
 import com.tanykoo.utils.Utils;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -8,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
@@ -19,6 +21,12 @@ public class ChineseChess extends Application {
     @FXML ChessBoard chessBoard;
     @FXML VBox panel;
     @FXML Button startGame;
+    @FXML
+    TextField t_x;
+    @FXML
+    TextField t_y;
+    @FXML Button click;
+
 
     ChessStyle style1 ;
     ChessStyle style2 ;
@@ -53,8 +61,14 @@ public class ChineseChess extends Application {
     }
 
     public void startGame(){
-        chessBoard.initGame(ChessManual.INIT_MANUAL);
+        chessBoard.initGame(ChessManual.INIT_MANUAL_FIRST);
         startGame.setDisable(true);
+        chessBoard.setModelListener(new ServerModelListener());
+    }
 
+    public void click(){
+        int x = Integer.parseInt(t_x.getText());
+        int y = Integer.parseInt(t_y.getText());
+        chessBoard.clicked(new Point(x,y));
     }
 }

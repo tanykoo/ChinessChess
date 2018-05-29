@@ -38,11 +38,25 @@ public class ChessManual {
     public static final char FIRST_R = 'r';
     public static final char FIRST_B = 'b';
 
-    private static final String manualStrPatten = "^[r,b]{1}[0-7,A-G]{90}[0,R,H,.]{0,90}$";
+    public static final char BOARD_R = 'r';
+    public static final char BOARD_B = 'b';
+
+   private static final String manualStrPatten = "^[r,b]{2}[0-7,A-G]{90}[0,R,H,.]{0,90}$";
 
 
 
-    private static final String INITALITASTR = "r"
+    private static final String INITALITASTR_FIRST = "rr"
+            + "ABCDEDCBA"
+            + "000000000"
+            + "0F00000F0"
+            + "G0G0G0G0G"
+            + "000000000"
+            + "000000000"
+            + "707070707"
+            + "060000060"
+            + "000000000"
+            + "123454321";
+    private static final String INITALITASTR_SECEND = "rb"
             + "ABCDEDCBA"
             + "000000000"
             + "0F00000F0"
@@ -54,12 +68,18 @@ public class ChessManual {
             + "000000000"
             + "123454321";
 
-    public static final ChessManual INIT_MANUAL = createManual(INITALITASTR);
+    public static final ChessManual INIT_MANUAL_FIRST = createManual(INITALITASTR_FIRST);
+    public static final ChessManual INIT_MANUAL_SECEND = createManual(INITALITASTR_SECEND);
 
     /**
      * 当前先手方
      */
     private Camp camp;
+
+    /**
+     * 当前棋板所属方
+     */
+    private Camp boardCamp;
 
     /**
      * 棋盘棋子信息
@@ -98,7 +118,16 @@ public class ChessManual {
                 chessManual.camp = Camp.RED;
                 break;
         }
-        String mapStr = manualStr.substring(1,91);
+        char boardCamp = manualStr.charAt(1);
+        switch (boardCamp){
+            case BOARD_B:
+                chessManual.boardCamp = Camp.BLACK;
+                break;
+            case BOARD_R:
+                chessManual.boardCamp = Camp.RED;
+                break;
+        }
+        String mapStr = manualStr.substring(2,92);
         for(int i=0; i<90;i++){
             char tmp = mapStr.charAt(i);
             if(! (tmp == NULL)){
@@ -109,8 +138,8 @@ public class ChessManual {
                 chessManual.pieceMap.put(new Point(i/9,i%9%10), tmp);
             }
         }
-        if(manualStr.length()>91){
-            String boxStr = manualStr.substring(91);
+        if(manualStr.length()>92){
+            String boxStr = manualStr.substring(92);
             for(int i=0; i<boxStr.length(); i++){
                 char tmp = boxStr.charAt(i);
                 if(!(tmp ==NULL)){
@@ -158,7 +187,7 @@ public class ChessManual {
     public String toString() {
 
         StringBuilder stringBuilder = new StringBuilder();
-        for(int i=0 ; i< (boxMap.size()==0?91:181); i++){
+        for(int i=0 ; i< (boxMap.size()==0?92:182); i++){
             stringBuilder.append(NULL);
         }
         switch (camp){
@@ -169,11 +198,19 @@ public class ChessManual {
                 stringBuilder.setCharAt(0,FIRST_R);
                 break;
         }
+        switch (boardCamp){
+            case RED:
+                stringBuilder.setCharAt(1, BOARD_R);
+                break;
+            case BLACK:
+                stringBuilder.setCharAt(1, BOARD_B);
+                break;
+        }
         for (Point point:pieceMap.keySet()) {
-            stringBuilder.setCharAt(((int)(point.getX()) * 9 + (int)(point.getY()) + 1), pieceMap.get(point));
+            stringBuilder.setCharAt(((int)(point.getX()) * 9 + (int)(point.getY()) + 2), pieceMap.get(point));
         }
         for (Point point:boxMap.keySet()){
-            stringBuilder.setCharAt(((int)(point.getX()) * 9 + (int)(point.getY()) + 91), boxMap.get(point));
+            stringBuilder.setCharAt(((int)(point.getX()) * 9 + (int)(point.getY()) + 92), boxMap.get(point));
         }
 
 
@@ -241,5 +278,11 @@ public class ChessManual {
         }
     }
 
+    public Camp getBoardCamp() {
+        return boardCamp;
+    }
 
+    public void setBoardCamp(Camp boardCamp) {
+        this.boardCamp = boardCamp;
+    }
 }

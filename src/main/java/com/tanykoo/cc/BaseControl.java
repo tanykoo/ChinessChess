@@ -13,7 +13,7 @@ public abstract class BaseControl extends Canvas {
 
     private Image image;
 
-    {addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {clicked(event);});}
+    {addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {clicked(event);});}
 
     public Image getImage() {
         return image;
